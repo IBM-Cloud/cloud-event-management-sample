@@ -1,0 +1,27 @@
+{
+	"name": "AlertNotificationStarterApp",
+	"version": "0.0.1",
+	"description": "A sample webserver that sends alerts to Alert Notification on Bluemix",
+	"scripts": {
+		"start": "node app.js"
+	},
+	"dependencies": {
+		"express": "4.12.x",
+		"cfenv": "1.0.x",
+		"superagent": "1.8.x"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/aarchamb/alert-notification-helloworld.git"
+	},
+	"engines": {
+		"node": "0.12.x"
+	},
+	"contributors": [
+		{
+			"name": "Adam Archambault",
+			"email": "aarchamb@us.ibm.com"
+		}
+	],
+	"license": "Apache-2.0"
+}

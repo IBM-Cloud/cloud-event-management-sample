@@ -1,0 +1,8 @@
+applications:
+- path: .
+  memory: 256M
+  instances: 1
+  domain: test.mybluemix.net
+  name: AlertNotificationSampleApp
+  host: alertnotificationsampleapp
+  disk_quota: 1024M

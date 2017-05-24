@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Alert Notification Hello World</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheets/style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+		function testAlertNotification() {
+			$.ajax({
+				url: '/send',
+				type: 'get'
+			});
+		}
+	</script>
+  </head>
+
+  <body ng-app="sample">
+    <table>
+      <tr>
+        <td>
+            <h1>Welcome to Alert Notification!</h1>
+          <p><button onclick="testAlertNotification()">Send Sample Alert</button>
+    </table>
+  </body>
+</html>
