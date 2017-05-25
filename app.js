@@ -1,14 +1,8 @@
-/* Sample Alert Notification Application */
-
 var express = require('express')
   , request = require('superagent')
   , config = require('./config.js').readGlobalConfig();
 
-var alert = {
-	"What": "sample alert",
-	"Where": "someserver.ibm.com",
-	"Severity": "Critical"  // Critical = 5
-}
+var event = {};
 
 var useContainer = process.argv.indexOf("--container") > -1;
 
@@ -33,15 +27,15 @@ var app = express();
 // serve test button
 app.get('/send', function (req, res) {
 	request
-        .post(config.alertnotification.url)
-		.auth(config.alertnotification.name, config.alertnotification.password)
+        .post(config.request.url)
+		.auth(config.request.name, config.request.password)
 		.set('Content-Type', 'application/json')
-		.send(JSON.stringify(alert))
+		.send(JSON.stringify(event))
 		.end(function(err, result) {
 			if (err) {
-				console.log("Error sending alert: " +err);
+				console.log("Error sending event: " +err);
 			} else {
-				console.log("Successfully sent alert");
+				console.log("Successfully sent event");
 			}
         });
 	res.sendStatus(204);

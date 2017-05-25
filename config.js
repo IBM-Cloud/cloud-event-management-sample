@@ -2,8 +2,8 @@
 // Default (localhost) settings
 //
 var defaults = {
-    alertnotification: {
-		url: 'https://notify-staging.stage1.mybluemix.net/api/alerts/v1',
+    request: {
+		url: 'https://edge-eventpreprocessor.stage1.mybluemix.net/api/events/demo/v1',
         name: 'evan/dajpengetseh',
         password: 'hDWong5Wx2HZ6wtHoSIgFq9Lut3N5tll',
     }

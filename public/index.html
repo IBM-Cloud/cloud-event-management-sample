@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Alert Notification Hello World</title>
+    <title>CEM Startup</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stylesheets/style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
-		function testAlertNotification() {
+		function testEventAPI() {
 			$.ajax({
 				url: '/send',
 				type: 'get'
@@ -21,8 +21,8 @@
     <table>
       <tr>
         <td>
-            <h1>Welcome to Alert Notification!</h1>
-          <p><button onclick="testAlertNotification()">Send Sample Alert</button>
+            <h1>Welcome to Cloud Event Management!</h1>
+          <p><button onclick="testEventAPI()">Send event</button>
     </table>
   </body>
 </html>
