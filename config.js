@@ -4,8 +4,8 @@
 var defaults = {
     alertnotification: {
 		url: 'https://notify-staging.stage1.mybluemix.net/api/alerts/v1',
-        name: 'evan/dajpengetseh',
-        password: 'hDWong5Wx2HZ6wtHoSIgFq9Lut3N5tll',
+        name: '',
+        password: '',
     }
 }
 
