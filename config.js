@@ -53,5 +53,6 @@ exports.readGlobalConfig = function() {
 			}
 		}
 	}
+	console.log(config);
 	return config;
 }

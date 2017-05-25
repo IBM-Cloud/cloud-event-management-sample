@@ -2,6 +2,7 @@ var express = require('express')
   , request = require('superagent')
   , config = require('./config.js').readGlobalConfig();
 
+console.log(config);
 var event = {};
 
 var useContainer = process.argv.indexOf("--container") > -1;
