@@ -1,5 +1,5 @@
 {
-	"name": "CEMStarterApp",
+	"name": "cem-starter-app",
 	"version": "0.0.1",
 	"description": "A sample webserver that sends alerts to Cloud Event Management on Bluemix",
 	"scripts": {
