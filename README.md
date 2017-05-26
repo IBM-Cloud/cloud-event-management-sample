@@ -57,11 +57,11 @@ Before running this app, you will need an instance of the Cloud Event Management
 
   ```
 var defaults = {
-    	cloudeventmanagement: {
-				url: 'https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net/api/events/demo/v1',
+      cloudeventmanagement: {
+        url: 'https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net/api/events/demo/v1',
         name: '',
         password: '',
-    }
+      }
 }
   ```
   This will allow the starter app to authenticate with Cloud Event Management and send events.
