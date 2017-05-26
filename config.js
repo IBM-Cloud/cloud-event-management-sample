@@ -1,11 +1,12 @@
 //
 // Default (localhost) settings
+// Match name and password to credentials given from creating an API key
 //
 var defaults = {
-    request: {
-		url: 'https://edge-eventpreprocessor.stage1.mybluemix.net/api/events/demo/v1',
-        name: 'evan/dajpengetseh',
-        password: 'hDWong5Wx2HZ6wtHoSIgFq9Lut3N5tll',
+    	cloudeventmanagement: {
+				url: 'https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net/api/events/demo/v1',
+        name: '',
+        password: '',
     }
 }
 
@@ -21,19 +22,19 @@ exports.readGlobalConfig = function() {
 		var services = {};
 
 		// Get into a more usable form
-		for (service_type in vcap_services) {
+		for (var service_type in vcap_services) {
 			var service_array = vcap_services[service_type];
 
-			for (i = 0; i < service_array.length; ++i) {
+			for (var i = 0; i < service_array.length; ++i) {
 				services[service_type] = service_array[i].credentials;
 			}
 		}
 
 		// Copy provided credentials from environment to configuration
-		for (service_name in defaults) {
+		for (var service_name in defaults) {
 			if (services[service_name]) {
 				config[service_name] = {}
-				for (credential_name in defaults[service_name]) {
+				for (var credential_name in defaults[service_name]) {
 					if (services[service_name][credential_name]) {
 						config[service_name][credential_name] = services[service_name][credential_name];
 					}
@@ -41,18 +42,19 @@ exports.readGlobalConfig = function() {
 			}
 		}
 	} else {
-		for (service_name in defaults) {
+		for (var service_name in defaults) {
 			if (!config[service_name]) {
 				config[service_name] = {}
 			}
-
-			for (credential_name in defaults[service_name]) {
+			for (var credential_name in defaults[service_name]) {
 				if (!config[service_name][credential_name]) {
 					config[service_name][credential_name] = defaults[service_name][credential_name];
 				}
 			}
 		}
 	}
-	console.log(config);
+
+	//Setup url for Demo API
+  config.cloudeventmanagement.url = defaults.cloudeventmanagement.url;
 	return config;
 }
