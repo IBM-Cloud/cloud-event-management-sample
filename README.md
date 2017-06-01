@@ -12,7 +12,11 @@ Before running this app, you will need an instance of the Cloud Event Management
 
 3. `cd` into this newly created directory
 
-4. Connect to Bluemix in the command line tool and follow the prompts to log in
+4. Open the manifest.yml file and change the host value to something unique.
+
+The host you choose will determine the subdomain of your application's URL: <host>.mybluemix.net
+
+5. Connect to Bluemix in the command line tool and follow the prompts to log in
 
   ```
   $ cf api https://api.ng.bluemix.net
@@ -21,7 +25,7 @@ Before running this app, you will need an instance of the Cloud Event Management
 
   If asked to select a space, select the one that contains your Cloud Event Management instance.
 
-5. Confirm that you are in the correct space with:
+6. Confirm that you are in the correct space with:
 
   ```
   cf services
@@ -29,7 +33,7 @@ Before running this app, you will need an instance of the Cloud Event Management
 
   You should see your Cloud Event Management instance listed.  Make a note of the instance name.
 
-6. Push the app to Bluemix.
+7. Push the app to Bluemix.
 
   ```
   $ cf push CEMSampleApp
