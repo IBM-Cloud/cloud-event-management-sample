@@ -3,8 +3,8 @@
 // Match name and password to credentials given from creating an API key
 //
 var defaults = {
-    	cloudeventmanagement: {
-				url: 'https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net/api/events/demo/v1',
+      cloudeventmanagement: {
+        url: 'https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net/api/events/demo/v1',
         name: '',
         password: '',
     }
@@ -16,45 +16,43 @@ var defaults = {
 // settings.
 //
 exports.readGlobalConfig = function() {
-	var config = {};
-	if (process.env.VCAP_SERVICES) {
-		var vcap_services = JSON.parse(process.env.VCAP_SERVICES);
-		var services = {};
+  var config = {};
+  if (process.env.VCAP_SERVICES) {
+    var vcap_services = JSON.parse(process.env.VCAP_SERVICES);
+    var services = {};
 
-		// Get into a more usable form
-		for (var service_type in vcap_services) {
-			var service_array = vcap_services[service_type];
+    // Get into a more usable form
+    for (var service_type in vcap_services) {
+      var service_array = vcap_services[service_type];
 
-			for (var i = 0; i < service_array.length; ++i) {
-				services[service_type] = service_array[i].credentials;
-			}
-		}
+      for (var i = 0; i < service_array.length; ++i) {
+        services[service_type] = service_array[i].credentials;
+      }
+    }
 
-		// Copy provided credentials from environment to configuration
-		for (var service_name in defaults) {
-			if (services[service_name]) {
-				config[service_name] = {}
-				for (var credential_name in defaults[service_name]) {
-					if (services[service_name][credential_name]) {
-						config[service_name][credential_name] = services[service_name][credential_name];
-					}
-				}
-			}
-		}
-	} else {
-		for (var service_name in defaults) {
-			if (!config[service_name]) {
-				config[service_name] = {}
-			}
-			for (var credential_name in defaults[service_name]) {
-				if (!config[service_name][credential_name]) {
-					config[service_name][credential_name] = defaults[service_name][credential_name];
-				}
-			}
-		}
-	}
-
-	//Setup url for Demo API
-  config.cloudeventmanagement.url = defaults.cloudeventmanagement.url;
-	return config;
+    // Copy provided credentials from environment to configuration
+    for (var service_name in defaults) {
+      if (services[service_name]) {
+        config[service_name] = {}
+        for (var credential_name in defaults[service_name]) {
+          if (services[service_name][credential_name]) {
+            config[service_name][credential_name] = services[service_name][credential_name];
+          }
+        }
+      }
+    }
+  } else {
+    for (var service_name in defaults) {
+      if (!config[service_name]) {
+        config[service_name] = {}
+      }
+      for (var credential_name in defaults[service_name]) {
+        if (!config[service_name][credential_name]) {
+          config[service_name][credential_name] = defaults[service_name][credential_name];
+        }
+      }
+    }
+  }
+  
+  return config;
 }

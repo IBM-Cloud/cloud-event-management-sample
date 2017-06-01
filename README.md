@@ -46,7 +46,12 @@ The host you choose will determine the subdomain of your application's URL: `<ho
   $ cf bind-service CEMSampleApp "<instance_name>"
   ```
 
-9. Access the app at the URL from Step 7, and press the button to send an event!
+9. Restage the app
+  ```
+  $ cf restage CEMSampleApp
+  ```
+
+10. Access the app at the URL from Step 9, and press the button to send events!
 
 
 ## Run the app locally

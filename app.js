@@ -26,6 +26,7 @@ var app = express();
 
 // serve test button
 app.get('/send', function (req, res) {
+    config.cloudeventmanagement.url = 'https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net/api/events/demo/v1';
 	request
     .post(config.cloudeventmanagement.url)
     .auth(config.cloudeventmanagement.name, config.cloudeventmanagement.password)
