@@ -14,7 +14,7 @@ Before running this app, you will need an instance of the Cloud Event Management
 
 4. Open the manifest.yml file and change the host value to something unique.
 
-The host you choose will determine the subdomain of your application's URL: <host>.mybluemix.net
+The host you choose will determine the subdomain of your application's URL: `<host>.mybluemix.net`
 
 5. Connect to Bluemix in the command line tool and follow the prompts to log in
 
