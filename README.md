@@ -1,7 +1,9 @@
 # Cloud Event Management Overview
-This starter demonstrates how to send events via the Cloud Event Management API using a simple Node.js web application. 
+Use [Cloud Event Management][video_url] to set up real-time incident management for your services, applications, and infrastructure. Cloud Event Management can receive events from various monitoring sources, either on premise or in the cloud. Events indicate that something has happened on an application, service, or another monitored object. Related events are correlated into an incident. The information from incidents, together with policies and runbooks, help operations teams identify underlying problems and restore service. 
 
-Before running this app, you will need an instance of the Cloud Event Management service. 
+This starter demonstrates how to send events via the Cloud Event Management API using a simple Node.js web application. For more information, see the [API documentation][api_docs_url].
+
+Before running this app, you will need an instance of the Cloud Event Management service. Get one [here][provision_url].
 
 
 ## Running the app on Bluemix
@@ -14,7 +16,7 @@ Before running this app, you will need an instance of the Cloud Event Management
 
 4. Open the manifest.yml file and change the host value to something unique.
 
-The host you choose will determine the subdomain of your application's URL: `<host>.mybluemix.net`
+  The host you choose will determine the subdomain of your application's URL: `<host>.mybluemix.net`
 
 5. Connect to Bluemix in the command line tool and follow the prompts to log in
 
@@ -86,6 +88,9 @@ var defaults = {
 
 8. Press the button to send an event!  Try modifying the code in app.js to change the content, source, and severity of the event.
 
+[video_url]: https://ibm.biz/Bdisd7
+[api_docs_url]: https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net/docs/events/v1/
+[provision_url]: https://console.bluemix.net/catalog/services/cloud-event-management
 [install_node_url]: https://nodejs.org/en/download/
 [cloud_foundry_url]: https://github.com/cloudfoundry/cli
 
