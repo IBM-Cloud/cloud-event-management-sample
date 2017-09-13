@@ -1,24 +1,27 @@
-# Cloud Event Management Overview
-Use [Cloud Event Management][video_url] to set up real-time incident management for your services, applications, and infrastructure. Cloud Event Management can receive events from various monitoring sources, either on premise or in the cloud. Events indicate that something has happened on an application, service, or another monitored object. Related events are correlated into an incident. The information from incidents, together with policies and runbooks, help operations teams identify underlying problems and restore service. 
+# Starter Application For Cloud Event Management
+This is a starter application for the [Cloud Event Management][provision_url] service in Bluemix, that demonstrates how to send events via the API using a simple Node.js web application. For more information, see the [API documentation][api_docs_url].
 
-This starter demonstrates how to send events via the Cloud Event Management API using a simple Node.js web application. For more information, see the [API documentation][api_docs_url].
+## Cloud Event Management Overview
+Use [Cloud Event Management][video_url] to set up real-time incident management for your services, applications, and infrastructure. Cloud Event Management can receive events from various monitoring sources, either on premise or in the cloud. Events indicate that something has happened on an application, service, or another monitored object. Related events are correlated into an incident. The information from incidents, together with policies and runbooks, help operations teams identify underlying problems and restore service.
 
-Before running this app, you will need an instance of the Cloud Event Management service. Get one [here][provision_url].
+[![introduction video][image_url]][video_url]
 
 
 ## Running the app on Bluemix
 
-1. Download and install the [Cloud Foundry CLI][cloud_foundry_url] tool
+1. Before running this app, you will need an instance of the Cloud Event Management service. Get one [here][provision_url].
 
-2. Clone the app to your local environment from your terminal 
+2. Download and install the [Cloud Foundry CLI][cloud_foundry_url] tool
 
-3. `cd` into this newly created directory
+3. Clone the app to your local environment from your terminal 
 
-4. Open the manifest.yml file and change the host value to something unique.
+4. `cd` into this newly created directory
+
+5. Open the manifest.yml file and change the host value to something unique.
 
   The host you choose will determine the subdomain of your application's URL: `<host>.mybluemix.net`
 
-5. Connect to Bluemix in the command line tool and follow the prompts to log in
+6. Connect to Bluemix in the command line tool and follow the prompts to log in
 
   ```
   $ cf api https://api.ng.bluemix.net
@@ -27,7 +30,7 @@ Before running this app, you will need an instance of the Cloud Event Management
 
   If asked to select a space, select the one that contains your Cloud Event Management instance.
 
-6. Confirm that you are in the correct space with:
+7. Confirm that you are in the correct space with:
 
   ```
   cf services
@@ -35,25 +38,25 @@ Before running this app, you will need an instance of the Cloud Event Management
 
   You should see your Cloud Event Management instance listed.  Make a note of the instance name.
 
-7. Push the app to Bluemix.
+8. Push the app to Bluemix.
 
   ```
-  $ cf push CEMSampleApp
+  $ cf push
   ```
 
   When the command finishes, you should see the `<host>.mybluemix.net` URL in the output.  This will be the URL at which you can access the sample app.
 
-8. Bind the Cloud Event Management service to the app, where `<instance_name>` is the name from Step 6.
+9. Bind the Cloud Event Management service to the app, where `<instance_name>` is the name from Step 7.
   ```
   $ cf bind-service CEMSampleApp "<instance_name>"
   ```
 
-9. Restage the app
+10. Restage the app
   ```
   $ cf restage CEMSampleApp
   ```
 
-10. Access the app at the URL from Step 9, and press the button to send events!
+11. Access the app at the URL from Step 9, and press the button to send events!
 
 
 ## Run the app locally
@@ -88,6 +91,7 @@ var defaults = {
 
 8. Press the button to send an event!  Try modifying the code in app.js to change the content, source, and severity of the event.
 
+[image_url]: https://ibmeventmgt-bm-brokers.mybluemix.net/static/incident_viewer.png
 [video_url]: https://ibm.biz/Bdisd7
 [api_docs_url]: https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net/docs/events/v1/
 [provision_url]: https://console.bluemix.net/catalog/services/cloud-event-management
