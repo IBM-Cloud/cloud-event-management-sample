@@ -4,7 +4,7 @@
 //
 var defaults = {
       cloudeventmanagement: {
-        url: 'https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net/api/events/demo/v1',
+        url: 'https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net',
         name: '',
         password: '',
     }

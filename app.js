@@ -1,5 +1,6 @@
 var express = require('express')
   , request = require('superagent')
+  , bodyParser = require('body-parser')
   , config = require('./config.js').readGlobalConfig();
 
 var event = {};
@@ -24,11 +25,12 @@ if (!useContainer) {
 // create a new express server
 var app = express();
 
+app.use(bodyParser.json());
+
 // serve test button
 app.get('/send', function (req, res) {
-    config.cloudeventmanagement.url = 'https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net/api/events/demo/v1';
 	request
-    .post(config.cloudeventmanagement.url)
+    .post(config.cloudeventmanagement.url + '/api/events/v1')
     .auth(config.cloudeventmanagement.name, config.cloudeventmanagement.password)
     .set('Content-Type', 'application/json')
     .send(JSON.stringify(event))
@@ -40,6 +42,23 @@ app.get('/send', function (req, res) {
         }
     });
 	res.sendStatus(204);
+});
+
+app.post('/api/kubernetes', (req, res) => {
+    const kubEvent = req.body;
+    const cemEvent = kubEvent;    // TODO: mapping here
+    request
+    .post(config.cloudeventmanagement.url + '/api/events/v1')
+    .auth(config.cloudeventmanagement.name, config.cloudeventmanagement.password)
+    .set('Content-Type', 'application/json')
+    .send(cemEvent)
+    .end(function(err) {
+        if (err) {
+            res.sendStatus(400);
+        } else {
+            res.sendStatus(204);
+        }
+    });
 });
 
 // serve the files out of ./public as our main files
