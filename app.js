@@ -3,7 +3,27 @@ var express = require('express')
   , bodyParser = require('body-parser')
   , config = require('./config.js').readGlobalConfig();
 
-var event = {};
+var event = {
+  resource: {
+    type: "service",
+    name: "demo",
+    displayName: "Demo",
+    location: "wdc",
+    application: "demo",
+    hostname: "demoevent.example.com"
+  },
+  summary: "This is a demo event from the sample app",
+  severity: "Warning",
+  sender: {
+    type: "synthetics",
+    name: "db-synthetic-mon"  
+  },
+  type: {
+    statusOrThreshold: "> 200",
+    eventType: "Date > " + Date.now()
+  },
+  resolution: false
+};
 
 var useContainer = process.argv.indexOf("--container") > -1;
 
