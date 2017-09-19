@@ -2,7 +2,27 @@ var express = require('express')
   , request = require('superagent')
   , config = require('./config.js').readGlobalConfig();
 
-var event = {};
+var event = {
+  resource: {
+    type: "service",
+    name: "demo",
+    displayName: "Demo",
+    location: "wdc",
+    application: "demo",
+    hostname: "demoevent.example.com"
+  },
+  summary: "This is a demo event from the sample app",
+  severity: "Warning",
+  sender: {
+    type: "synthetics",
+    name: "db-synthetic-mon"  
+  },
+  type: {
+    statusOrThreshold: "> 200",
+    eventType: "Date > " + Date.now()
+  },
+  resolution: false
+};
 
 var useContainer = process.argv.indexOf("--container") > -1;
 
@@ -26,9 +46,8 @@ var app = express();
 
 // serve test button
 app.get('/send', function (req, res) {
-    config.cloudeventmanagement.url = 'https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net/api/events/demo/v1';
 	request
-    .post(config.cloudeventmanagement.url)
+    .post(config.cloudeventmanagement.url + '/api/events/v1')
     .auth(config.cloudeventmanagement.name, config.cloudeventmanagement.password)
     .set('Content-Type', 'application/json')
     .send(JSON.stringify(event))
