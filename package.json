@@ -13,15 +13,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.ibm.com/Evan-Li1/CEM-Startup"
+    "url": "https://github.com/IBM-Bluemix/cloud-event-management-sample"
   },
   "engines": {
-    "node": "0.12.x"
+    "node": "6.11.x"
   },
   "contributors": [
     {
       "name": "Evan Li",
       "email": "Evan.Li1@us.ibm.com"
+    },
+    {
+      "name": "Adam Archambault",
+      "email": "aarchamb@us.ibm.com"
+    },
+    {
+      "name": "Phil Riedel",
+      "email": "priedel@us.ibm.com"
     }
   ],
   "license": "Apache-2.0"
