@@ -1,0 +1,21 @@
+{
+  "resource": {
+    "type": "service",
+    "name": "demo",
+    "displayName": "Demo",
+    "location": "wdc",
+    "application": "demo",
+    "hostname": "demoevent.example.com"
+  },
+  "summary": "This is a demo event from the sample app",
+  "severity": "Warning",
+  "sender": {
+    "type": "synthetics",
+    "name": "db-synthetic-mon"
+  },
+  "type": {
+    "statusOrThreshold": "> 200",
+    "eventType": "Date > "
+  },
+  "resolution": false
+}

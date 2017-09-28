@@ -6,8 +6,11 @@ const config     = require('./config.js').readGlobalConfig();
 
 const useContainer = process.argv.indexOf("--container") > -1;
 
-const cemApiUrl = config.cloudeventmanagement.url + '/api/events/v1';
-const cemApiCreds = [config.cloudeventmanagement.name, config.cloudeventmanagement.password];
+let cemApiUrl, cemApiCreds;
+if (config.cloudeventmanagement) {
+    cemApiUrl = config.cloudeventmanagement.url + '/api/events/v1';
+    cemApiCreds = [config.cloudeventmanagement.name, config.cloudeventmanagement.password];
+}
 
 let appEnv;
 if (!useContainer) {
@@ -29,11 +32,15 @@ app.use(bodyParser.json());
 
 // Serve test button: press the button to send a predefined event to Cloud Event Management
 app.get('/send', function (req, res) {
+    let event = require('./sample-events/cem-event.json');
+    // Update the eventType with the current date
+    event.type.eventType += Date.now();
+
     request
     .post(cemApiUrl)
     .auth(...cemApiCreds)
     .set('Content-Type', 'application/json')
-    .send(getSampleEvent())
+    .send(event)
     .end(function(err) {
         if (err) {
             console.log("Error sending event: " + err);
@@ -46,16 +53,16 @@ app.get('/send', function (req, res) {
 
 // Serve Prometheus normalizer endpoint:
 // configure a webhook receiver in Prometheus that points to `<sample app URL>/api/prometheus`
-// and incoming events will be translated and forwarded to Cloud Event Management
+// and incoming events will be mapped and forwarded to Cloud Event Management
 // (https://prometheus.io/docs/alerting/configuration/#webhook_config)
 app.post('/api/prometheus', (req, res) => {
     const pEvent = req.body;
 
     let cemEvent;
     try {
-        cemEvent = translatePrometheusEvent(pEvent);
+        cemEvent = mapPrometheusEvent(pEvent);
     } catch (e) {
-        // The Prometheus event could not be translated
+        // The Prometheus event could not be mapped
         return res.sendStatus(400);
     }
 
@@ -84,33 +91,8 @@ app.listen(appEnv.port, function() {
     console.log("Server starting on " + (appEnv.url ? appEnv.url : "port " + appEnv.port));
 });
 
-
-function getSampleEvent() {
-    return {
-      resource: {
-        type: "service",
-        name: "demo",
-        displayName: "Demo",
-        location: "wdc",
-        application: "demo",
-        hostname: "demoevent.example.com"
-      },
-      summary: "This is a demo event from the sample app",
-      severity: "Warning",
-      sender: {
-        type: "synthetics",
-        name: "db-synthetic-mon"
-      },
-      type: {
-        statusOrThreshold: "> 200",
-        eventType: "Date > " + Date.now()
-      },
-      resolution: false
-    };
-}
-
-// Convert a Prometheus event to a Cloud Event Management event
-function translatePrometheusEvent(pEvent) {
+// Map a Prometheus event to a Cloud Event Management event
+function mapPrometheusEvent(pEvent) {
     let mappedEvent = {
         resolution: pEvent.status === 'resolved',
         summary: pEvent.alerts[0].annotations.summary + ' ' + pEvent.alerts[0].annotations.description,
@@ -142,8 +124,8 @@ function translatePrometheusEvent(pEvent) {
 
     switch (pEvent.commonLabels.severity) {
         case "critical": mappedEvent.severity = "Critical"; break;
-        case "warning":  mappedEvent.severity = "Warning";  break;
-        default:         mappedEvent.severity = "Indeterminate";
+        case "warning":  /* fallthrough */
+        default:         mappedEvent.severity = "Warning";  break;
     };
 
     return mappedEvent;

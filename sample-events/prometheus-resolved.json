@@ -1,0 +1,38 @@
+{
+  "receiver": "webhook",
+  "status": "resolved",
+  "alerts": [
+    {
+      "status": "resolved",
+      "labels": {
+        "alertname": "monitor_service_down",
+        "instance": "nodeexporter:9100",
+        "job": "nodeexporter",
+        "monitor": "docker-host-alpha",
+        "severity": "critical"
+      },
+      "annotations": {
+        "description": "Service nodeexporter:9100 is down.",
+        "summary": "Monitor service non-operational"
+      },
+      "startsAt": "2017-08-23T11:41:05.84Z",
+      "endsAt": "2017-08-23T11:43:15.839Z",
+      "generatorURL": "http://a1638af4a3e2:9090/graph?g0.expr=up+%3D%3D+0&g0.tab=0"
+    }
+  ],
+  "groupLabels": {
+    "alertname": "monitor_service_down"
+  },
+  "commonLabels": {
+    "alertname": "monitor_service_down",
+    "instance": "nodeexporter:9100",
+    "job": "nodeexporter",
+    "monitor": "docker-host-alpha",
+    "severity": "critical"
+  },
+  "commonAnnotations": {
+    "description": "Service nodeexporter:9100 is down.",
+    "summary": "Monitor service non-operational"
+  },
+  "externalURL": "http://1ac7f53fffea:9093"
+}
