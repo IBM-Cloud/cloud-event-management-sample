@@ -4,9 +4,9 @@ This is a starter application for the [Cloud Event Management][provision_url] se
 
 The application performs two functions:
 
-1. It serves a simple web page that sends a predefined event to Cloud Event Management when the user presses a button.
+1. It serves a simple web page that sends a predefined event to Cloud Event Management when the user presses a button. Use this part of the code as a template for sending in your own predefined events.
 
-2. It exposes an API endpoint that can be used to map incoming [Prometheus][prometheus_url] events and forward them to Cloud Event Management.
+2. It exposes an API endpoint that can be used to map incoming [Prometheus][prometheus_url] events and forward them to Cloud Event Management. Use this part of the code as a template for mapping events from any other unsupported event source.
 
 For more information, see the [API documentation][api_docs_url].
 
