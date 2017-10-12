@@ -114,7 +114,7 @@ var defaults = {
 [video_url]: https://ibm.biz/Bdisd7
 [api_docs_url]: https://console.bluemix.net/apidocs/919-cloud-event-management-api
 [api_docs_event_url]: https://console.bluemix.net/apidocs/919-cloud-event-management-api#create-an-event
-[provision_url]: https://console.bluemix.net/catalog/services/cloud-event-management
+[provision_url]: https://console.bluemix.net/catalog/?search=event%20management
 [install_node_url]: https://nodejs.org/en/download/
 [cloud_foundry_url]: https://github.com/cloudfoundry/cli
 [prometheus_url]: https://prometheus.io/
