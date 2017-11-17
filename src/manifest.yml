@@ -1,0 +1,8 @@
+---
+applications:
+- path: .
+  name: CEMSampleApp
+  random-route: true
+  memory: 256M
+  env:
+    INTEGRATION_CONTROLLER: https://edge-integration-controller.stage1.mybluemix.net

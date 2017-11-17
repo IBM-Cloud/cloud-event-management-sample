@@ -1,0 +1,8 @@
+---
+  apis:
+    broker:
+      description: Sample Integration Broker API
+      spec: ./broker/broker.yaml
+      docsUrl: /docs/broker/v1
+      docsApi: /docs/broker/v1/docs-api
+      controllers: ./broker

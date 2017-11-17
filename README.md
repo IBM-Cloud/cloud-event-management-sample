@@ -1,14 +1,12 @@
-# Starter Application For Cloud Event Management
+# Starter Integration Broker For Cloud Event Management
 
-This is a starter application for the [Cloud Event Management][provision_url] service in Bluemix, that demonstrates how to create, map, and send events via the API using a simple Node.js web application.
+This is a starter application for the [Cloud Event Management][provision_url] service in Bluemix, that demonstrates how to create a third party integration broker with CEM so users can create integration instances (event sources) from that broker which allows for custom creation, mapping, and sending events via using a simple Node.js web application.
 
-The application performs two functions:
-
-1. It serves a simple web page that sends a predefined event to Cloud Event Management when the user presses a button. Use this part of the code as a template for sending in your own predefined events.
-
-2. It exposes an API endpoint that can be used to map incoming [Prometheus][prometheus_url] events and forward them to Cloud Event Management. Use this part of the code as a template for mapping events from any other unsupported event source.
+The application serves the purpose as a Cloud Event Management integration broker that will be used to map incoming [Prometheus][prometheus_url] events and forward them to Cloud Event Management. After registering the broker, users will be able to create the Prometheus event source which will generate a webhook url for the broker. Prometheus events can then be sent into this webhook url which will then be transformed into an event and forwarded on to Cloud Event Management.
 
 For more information, see the [API documentation][api_docs_url].
+
+TODO: correct documentation links
 
 ## Cloud Event Management Overview
 Use [Cloud Event Management][video_url] to set up real-time incident management for your services, applications, and infrastructure. Cloud Event Management can receive events from various monitoring sources, either on premise or in the cloud. Events indicate that something has happened on an application, service, or another monitored object. Related events are correlated into an incident. The information from incidents, together with policies and runbooks, help operations teams identify underlying problems and restore service.
@@ -24,11 +22,11 @@ Use [Cloud Event Management][video_url] to set up real-time incident management 
 
 3. Clone the app to your local environment from your terminal
 
-4. `cd` into this newly created directory
+4. `cd` into the src directory of this newly created directory
 
-5. Open the manifest.yml file and change the host value to something unique.
+5. Open the manifest.yml file and change the INTEGRATION_CONTROLLER value to reflex the CEM environment you are using.
 
-  The host you choose will determine the subdomain of your application's URL: `<host>.mybluemix.net`
+  TODO: show production urls
 
 6. Connect to Bluemix in the command line tool and follow the prompts to log in
 
@@ -37,15 +35,11 @@ Use [Cloud Event Management][video_url] to set up real-time incident management 
   $ cf login
   ```
 
-  If asked to select a space, select the one that contains your Cloud Event Management instance.
-
-7. Confirm that you are in the correct space with:
+7. Confirm that you are in the correct organization and space with:
 
   ```
-  cf services
+  cf target
   ```
-
-  You should see your Cloud Event Management instance listed.  Make a note of the instance name.
 
 8. Push the app to Bluemix.
 
@@ -53,19 +47,9 @@ Use [Cloud Event Management][video_url] to set up real-time incident management 
   $ cf push
   ```
 
-  When the command finishes, you should see the `<host>.mybluemix.net` URL in the output.  This will be the URL at which you can access the sample app.
+  When the command finishes, you should see the `<host>.mybluemix.net` URL in the output.  This will be the URL at which you can access the sample app. Note your broker endpoint url will be `https://<host>.mybluemix.net/api/broker`
 
-9. Bind the Cloud Event Management service to the app, where `<instance_name>` is the name from Step 7.
-  ```
-  $ cf bind-service CEMSampleApp "<instance_name>"
-  ```
-
-10. Restage the app
-  ```
-  $ cf restage CEMSampleApp
-  ```
-
-11. Access the running app in a browser at the URL from Step 8
+12. Continue on to the section for registering your broker
 
 
 ## Running the app locally
@@ -74,41 +58,48 @@ Use [Cloud Event Management][video_url] to set up real-time incident management 
 
 2. Clone the app to your local environment
 
-3. cd into the app directory
+3. cd into the src directory
 
-4. Edit `config.js` and fill in your Cloud Event Management instance name, username and password:
+4. Run `npm install` to install the app's dependencies
 
+5. Run `../run.sh` to start the app
+
+6. Access the running app in a browser at the address specified by the terminal output, e.g.:
   ```
-var defaults = {
-      cloudeventmanagement: {
-        url: 'https://ibmeventmgt-bm-eventpreprocessor.mybluemix.net/api/events/demo/v1',
-        name: '',
-        password: '',
-      }
-}
+  Server starting on http://localhost:6018
   ```
-  This will allow the starter app to authenticate with Cloud Event Management and send events.
+7. View the broker catalog: `http://localhost:6018/api/broker/v2/catalog`
 
-5. Run `npm install` to install the app's dependencies
 
-6. Run `npm start` to start the app
+## Registering the broker
 
-7. Access the running app in a browser at the address specified by the terminal output, e.g.:
-  ```
-  Server starting on http://localhost:6001
-  ```
+Once the sample broker app has been deployed to Bluemix, you can now register the app with the integration controller. The `src/scripts/broker.js` file can be used to assist in managing your broker's registration.
 
-## Using the app
+1. Retrieve your cf oauth-token:
+`cf oauth-token`
 
-1. Once you've navigated to the app in your browser, you can press the button to send an event to Cloud Event Management.  Try modifying the code to change the summary and severity of the event, or to include form data submitted by the user.  The full schema for Cloud Event Management events is available in [the API documentation][api_docs_event_url].
+2. Use the `./broker.js register` command to register the new integration broker. 
 
-2. If you are running the app on Bluemix, you can configure Prometheus to send alerts to it.  [Configure a webhook receiver][prometheus_config_url] in Prometheus that points to `http://<host>.mybluemix.net/api/prometheus`, and the app will map any incoming alerts to Cloud Event Management events, then send them to the API.
+Options:
 
-  If you are running the app locally, you can simulate this behavior by sending the provided sample Prometheus alerts generated by Kubernetes, e.g.:
-  ```
-  curl -H 'Content-Type: application/json' -X POST http://localhost:6001/api/prometheus -d "$(cat ./sample-events/prometheus-firing.json)"
-  ```
-  If you have other webhook-based event sources, try adding more endpoints to the code to start receiving those events, or check out the existing integrations in Cloud Event Management under **Administration** > **Event Sources**.
+- `-n`: A unique name (label) for the broker
+- `-r`: The integration controller that was defined in the manifest.yml file in the previous steps
+- `-u`: The broker api url that is currently running in Bluemix (/api/broker)
+- `-a`: Additional bluemix user IDs that have access to manage the broker. The user making this request will automatically be added as an authorized user.
+- `-v`: Cloud event management tenants (service instance IDs) that have access to the integrations managed by the broker
+- `-t`: The cf oauth-token that was returned in the previous step.
+
+Note: `-v` and `-a` can be listed multiple times to add additional users and tenants.
+
+3. Once the broker is registered, users in the tenants supplied will immediately have access to create instances of your new integration. As a user of one of these tenants, in the Cloud Event Management UI, create an instance of the new integration. This will provide a webhook that you can post Prometheus events to.
+
+4. Post the prometheus-firing.json sample event to the webhook that is located under the `sample-events` directory.
+
+5. Continue to manage your broker with the `brokers.js` script.
+- register
+- retrieve
+- update
+- remove
 
 [image_url]: https://ibmeventmgt-bm-brokers.mybluemix.net/static/incident_viewer.png
 [video_url]: https://ibm.biz/Bdisd7

@@ -1,6 +1,0 @@
----
-applications:
-- path: .
-  name: CEMSampleApp
-  random-route: true
-  memory: 256M

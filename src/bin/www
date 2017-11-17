@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+const http         = require('http');
+const path         = require('path');
+const app          = require('../app');
+const config       = require('../etc/config.js');
+
+const server = http.createServer(app);
+
+//start server on the specified port and binding host
+server.listen(config.port, function() {
+    // containers won't have a bound URL yet
+    console.log('Integration broker server started on ' + (config.url ? config.url : "port " + config.port) + '/api/broker');
+});
+
+server.on('error', onError);
+
+/*
+ * Event listener for HTTP server "error" event.
+ */
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+  case 'EACCES':
+    console.log('Port requires elevated privileges');
+    throw error;
+  case 'EADDRINUSE':
+    console.log('Port is already in use');
+    throw error;
+  default:
+    throw error;
+  }
+}

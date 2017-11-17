@@ -1,0 +1,25 @@
+# This file contains all of the integration types exported by this broker
+---
+- id: prometheus
+  mapper: prometheus
+  handler:  webhook_handler
+  integration_catalog:
+    id: prometheus
+    name: Prometheus
+    description: Configure this event source to receive alerts from Prometheus.
+    tags:
+    - IBM
+    metadata:
+      displayName: prometheus
+      longDescription: |
+        Configure this event source to receive alert data from the sample
+        Prometheus.
+      providerDisplayName: IBM
+      type: eventsource
+      imageUrl: 'cem-svg:ibm'
+      configurationSteps:
+      - type: name
+      - type: webhook
+        instructions: |
+          Send Prometheus events into this webhook.
+      - type: enable_toggle

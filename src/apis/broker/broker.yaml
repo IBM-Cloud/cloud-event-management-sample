@@ -1,0 +1,237 @@
+---
+swagger: '2.0'
+schemes:
+ - 'http'
+info:
+  version: 1.0.0
+  title: Sample Integration Broker API
+basePath: "/api/broker/v2"
+parameters:
+  brokerTokenParam:
+    name: X-Auth-Token
+    in: header
+    description: Broker token
+    required: true
+    type: string
+  serviceParam:
+    name: serviceId
+    in: path
+    description: The integration type (e.g. bam, noi, etc.)
+    required: true
+    type: string
+  instanceParam:
+    name: instanceId
+    in: path
+    description: The event source instance id
+    required: true
+    type: string
+responses:
+  GeneralError:
+    description: Server error
+    schema:
+      "$ref": "#/definitions/Error"
+paths:
+  "/catalog":
+    x-swagger-router-controller: broker
+    get:
+      description: Return a list of integrations provided by this broker
+      operationId: getCatalog
+      tags:
+      - /catalog
+      responses:
+        default:
+          "$ref": "#/responses/GeneralError"
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                services:
+                  description: An array of all integrations this broker provides
+                  type: array
+                  items:
+                    $ref: "#/definitions/Integration"
+  "/service_instances/{serviceId}/{instanceId}":
+    x-swagger-router-controller: broker
+    put:
+      operationId: createInstance
+      description: Create a new instance of an integration (e.g. an event source instance)
+      tags:
+      - /service_instances
+      parameters:
+      - "$ref": "#/parameters/brokerTokenParam"
+      - "$ref": "#/parameters/serviceParam"
+      - "$ref": "#/parameters/instanceParam"
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: "#/definitions/CreateUpdateInstanceRequest"
+      responses:
+        default:
+          "$ref": "#/responses/GeneralError"
+        200:
+          description: Request was successful
+          schema:
+            $ref: "#/definitions/CreateInstanceResponse"
+    patch:
+      operationId: updateInstance
+      description: Update an existing instance of an integration (e.g. an event source instance)
+      tags:
+      - /service_instances
+      parameters:
+      - "$ref": "#/parameters/brokerTokenParam"
+      - "$ref": "#/parameters/serviceParam"
+      - "$ref": "#/parameters/instanceParam"
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: "#/definitions/CreateUpdateInstanceRequest"
+      responses:
+        default:
+          "$ref": "#/responses/GeneralError"
+        204:
+          description: Request was successful (save)
+        200:
+          description: Request was successful (regenerate)
+          schema:
+            $ref: "#/definitions/UpdateInstanceResponse"
+    delete:
+      operationId: deleteInstance
+      description: Delete an instance of an integration (e.g. an event source instance)
+      tags:
+      - /service_instances
+      parameters:
+      - "$ref": "#/parameters/brokerTokenParam"
+      - "$ref": "#/parameters/serviceParam"
+      - "$ref": "#/parameters/instanceParam"
+      responses:
+        default:
+          "$ref": "#/responses/GeneralError"
+        204:
+          description: Request was successful
+definitions:
+  Error:
+    type: object
+    required:
+    - code
+    - message
+    - level
+    properties:
+      code:
+        type: integer
+        description: Numeric error code
+        default: 0
+      message:
+        type: string
+        description: Short summary text describing the error
+      level:
+        type: string
+        description: The severity of the error
+        enum:
+        - error
+        - warning
+        - info
+      description:
+        type: string
+        description: A detailed description of the error
+      "more_info":
+        type: string
+        description: Optional link to more information about the error
+  Integration:
+    type: object
+    properties:
+      id:
+        description: The ID of the integration
+        type: string
+      name:
+        description: The name of the integration
+        type: string
+      description:
+        description: A description of the integration
+        type: string
+      tags:
+          description: The set of tags relating to this integration
+          type: array
+          items:
+              type: string
+      metadata:
+          $ref: "#/definitions/CatalogMetadata"
+  CatalogMetadata:
+    type: object
+    properties:
+      displayName:
+        description: The official name of the integration to be displayed in the UI
+        type: string
+      longDescription:
+        description: Explanation of the integration, what it does, any background information
+        type: string
+      providerDisplayName:
+        description: Name of the integration provider to be displayed in the UI
+        type: string
+      type:
+        description: The type of the integration, currently just event source but will eventually include outgoing integrations as well
+        type: string
+        enum:
+        - eventsource
+      imageUrl:
+        description: The URL for an image to be displayed with the integration in the UI
+        type: string
+      configurationSteps:
+        description: Steps for setting up the integration, to be displayed in the UI
+        type: array
+        items:
+          type: object
+      i18n:
+        description: Translations for all of the metadata text that gets displayed to end users
+        type: object
+  CreateUpdateInstanceRequest:
+    type: object
+    required:
+    - service_id
+    - context
+    - parameters
+    properties:
+      service_id:
+        description: The integration type (e.g. bam, noi, etc.)
+        type: string
+      context:
+        type: object
+        properties:
+          platform:
+            type: string
+          tenantId:
+            type: string
+      parameters:
+        type: object
+        properties:
+          state:
+            type: string
+          enabled:
+            type: boolean
+          auth_username:
+            type: string
+          auth_password:
+            type: string
+  TemporaryData:
+    type: object
+    properties:
+      url:
+        type: string
+      downloads:
+        type: object
+  CreateInstanceResponse:
+    type: object
+    properties:
+      temporary_data:
+        $ref: "#/definitions/TemporaryData"
+      parameters:
+        type: object
+  UpdateInstanceResponse:
+    type: object
+    properties:
+      temporary_data:
+        $ref: "#/definitions/TemporaryData"

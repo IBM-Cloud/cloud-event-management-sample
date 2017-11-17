@@ -1,0 +1,51 @@
+{
+  "name": "cem-starter-app",
+  "version": "0.0.2",
+  "description": "A sample integration broker that sends Prometheus alerts to Cloud Event Management on Bluemix",
+  "scripts": {
+    "start": "node --max-old-space-size=256 bin/www"
+  },
+  "readme": "See ../README.txt",
+  "dependencies": {
+    "async": "^2.5.0",
+    "body-parser": "^1.18.2",
+    "cfenv": "^1.0.4",
+    "compression": "^1.7.1",
+    "express": "^4.16.2",
+    "superagent": "^3.7.0",
+    "swagger-tools": "^0.10.3",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "command-line-args": "^4.0.7",
+    "command-line-commands": "^2.0.1",
+    "command-line-usage": "^4.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IBM-Bluemix/cloud-event-management-sample"
+  },
+  "engines": {
+    "node": "^6.11.3",
+    "npm": "^3.10.10"
+  },
+  "contributors": [
+    {
+      "name": "Evan Li",
+      "email": "Evan.Li1@us.ibm.com"
+    },
+    {
+      "name": "Adam Archambault",
+      "email": "aarchamb@us.ibm.com"
+    },
+    {
+      "name": "Phil Riedel",
+      "email": "priedel@us.ibm.com"
+    },
+    {
+      "name": "Brian Fabec",
+      "email": "bfabec@us.ibm.com"
+    }
+  ],
+  "license": "Apache-2.0"
+}

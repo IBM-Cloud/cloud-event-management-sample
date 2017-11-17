@@ -1,0 +1,19 @@
+Copy the src_messages.json to the various locales to be supported and then provide the translated strings.
+
+For example:
+  messages_ar.json
+  messages_cs.json
+  messages_de.json
+  messages_es.json
+  messages_fr.json
+  messages_hd.json
+  messages_hu.json
+  messages_it.json
+  messages_ja.json
+  messages_ko.json
+  messages_pl.json
+  messages_pt-BR.json
+  messages_ru.json
+  messages_th.json
+  messages_zh-CN.json
+  messages_zh-TW.json

@@ -1,0 +1,4 @@
+{
+  "prometheus.metadata.longDescription": "Configure this event source to receive alerts from Prometheus.\n",
+  "prometheus.metadata.configurationSteps.1.instructions": "Send Prometheus events into this webhook."
+}
