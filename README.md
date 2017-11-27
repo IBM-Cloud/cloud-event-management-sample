@@ -73,12 +73,12 @@ Use [Cloud Event Management][video_url] to set up real-time incident management 
 
 ## Registering the broker
 
-Once the sample broker app has been deployed to Bluemix, you can now register the app with the integration controller. The `src/scripts/broker.js` file can be used to assist in managing your broker's registration.
+Once the sample broker app has been deployed to Bluemix, you can now register the app with the integration controller. The `src/scripts/brokers.js` file can be used to assist in managing your broker's registration.
 
 1. Retrieve your cf oauth-token:
 `cf oauth-token`
 
-2. Use the `./broker.js register` command to register the new integration broker. 
+2. Use the `./brokers.js register` command to register the new integration broker. 
 
 Options:
 

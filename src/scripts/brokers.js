@@ -45,12 +45,12 @@ const argData = {
   null: {
     usage: [
       {
-        header: 'broker.js',
+        header: 'brokers.js',
         content: 'Manage CEM integration brokers'
       },
       {
         header: 'synopsis',
-        content: '$ broker.js <command> <options>'
+        content: '$ brokers.js <command> <options>'
       },
       {
         header: 'Command List',
@@ -92,7 +92,7 @@ const argData = {
       },
       {
         header: 'synopsis',
-        content: '$ broker.js remove <arguments>'
+        content: '$ brokers.js remove <arguments>'
       },
       {
         header: 'arguments',
@@ -109,7 +109,7 @@ const argData = {
       },
       {
         header: 'synopsis',
-        content: '$ broker.js register <arguments>'
+        content: '$ brokers.js register <arguments>'
       },
       {
         header: 'arguments',
@@ -126,7 +126,7 @@ const argData = {
       },
       {
         header: 'synopsis',
-        content: '$ broker.js retrieve <arguments>'
+        content: '$ brokers.js retrieve <arguments>'
       },
       {
         header: 'arguments',
@@ -143,7 +143,7 @@ const argData = {
       },
       {
         header: 'synopsis',
-        content: '$ broker.js update <arguments>'
+        content: '$ brokers.js update <arguments>'
       },
       {
         header: 'arguments',

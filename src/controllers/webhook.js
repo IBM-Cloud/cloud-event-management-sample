@@ -71,7 +71,7 @@ router.post('/:serviceId/:subscriptionId?/:instanceId?/:key?', (req, res, next) 
   .end((postErr, postRes) => {
     if (postErr || !postRes.body) {
       console.log({postErr}, 'Unable to send event to integration controller gateway');
-      return res.status(500).send('Unable to send event to integration controller gateway');
+      return res.status((postErr && postErr.status) || 500).send('Unable to send event to integration controller gateway');
     }
 
     res.send(postRes.body);
