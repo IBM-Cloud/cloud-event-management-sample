@@ -197,7 +197,7 @@ switch(command) {
         visibilities: options.visibility.map(v => { return { tenant: v } })
       })
       .end((err, res) => {
-        if (err || !res.body) {
+        if (err || !res || !res.body) {
           console.log({err}, 'Error registering broker');
         } else {
           console.log(JSON.stringify(res.body, null, 2));
@@ -234,9 +234,9 @@ switch(command) {
       .set('Authorization', options.token)
       .set('Accept', 'application/json')
       .end((err, res) => {
-        if (err && err.status === 404 || !res.body) {
+        if (err && err.status === 404) {
           console.log('Broker is not found');
-        } else if (err) {
+        } else if (err || !res || !res.body) {
           console.log({err}, 'Error retrieving broker');
         } else {
           console.log(JSON.stringify(res.body, null, 2));
@@ -259,9 +259,9 @@ switch(command) {
         visibilities: options.visibility.map(v => { return { tenant: v } })
       })
       .end((err, res) => {
-        if (err && err.status === 404 || !res.body) {
-          console.log('Broker is not found');
-        } else if (err) {
+        if (err && err.status === 404) {
+          console.log({err}, 'Broker is not found');
+        } else if (err || !res || !res.body) {
           console.log({err}, 'Error updating broker');
         } else {
           console.log(JSON.stringify(res.body, null, 2));
