@@ -14,7 +14,7 @@
       longDescription: |
         Configure this event source to receive alert data from the sample
         Prometheus.
-      providerDisplayName: IBM
+      providerDisplayName: ACME Inc.
       type: eventsource
       imageUrl: 'cem-svg:ibm'
       configurationSteps:
